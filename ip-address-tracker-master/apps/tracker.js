@@ -86,6 +86,17 @@ async function getIPData(query = ''){
         updateUI(data);
         updateMap(data.location.lat, data.location.lng);
 
-    } catch
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Failed to fetch IP data. please check your input and try again.');
+    } finally {
+        showLoading(false);
+    }
 
 }
+
+// Update UI with IP data
+function updateUI(data) {
+    
+}
+
