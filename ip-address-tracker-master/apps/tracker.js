@@ -3,7 +3,7 @@
  const API_KEY = 'at_Et1xKgn6RyvRpjLSWNNzcoWVBQnl2';
 
  //Initialize map
-function initMap(lat = 34.0522, lng = -118.2437) {
+function initMap(lat = 51.505, lng = -0.09) {
     if (map) {
         map.remove();
     }
@@ -97,6 +97,36 @@ async function getIPData(query = ''){
 
 // Update UI with IP data
 function updateUI(data) {
+    document.getElementById('ipAddress').textContent = data.ip || '-';
+    document.getElementById('location').textContent = 
+        `${data.location.city || ''}, ${data.location.region || ''} ${data.location.postalcode || ''}`.trim() || '-';
+    document.getElementById('timezone').textContent = 
+        data.location.timezone ? `UTC ${data.location.timezone}` : '-';
+    document.getElementById('isp').textContent = data.isp || '-'; 
     
+     // Animate the info items
+    document.querySelectorAll('.info-box').forEach((item, index) => {
+        item.style.animation = 'none';
+        setTimeout(() => {
+            item.style.animation = `fadeIn 0.5s ease ${index * 0.1}s both`;
+        }, 10);
+    });
 }
+
+//update map position
+function updateMap(lat, lng) {
+    if(!map) {
+        initMap(lat, lng);
+    } else {
+        map.setView([lat, lng], 13, {
+            animate: true,
+            duration: 1
+        });
+
+        if (marker) {
+            marker.setLatLng([lat, lng]);
+        }
+    }
+}
+
 
