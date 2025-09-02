@@ -129,4 +129,19 @@ function updateMap(lat, lng) {
     }
 }
 
+// show or hide loading spinner
+function showLoading(show) {
+    document.getElementById('Loading').classList.toggle('active', show);
+}
+
+//show error message
+function showError(message) {
+    const errorEl = document.getElementById('errorMessage');
+    errorEl.textContent = message;
+    errorEl.classList.add('active');
+
+    setTimeout(() => {
+        errorEl.classList.remove('active');
+    }, 5000);
+}
 
