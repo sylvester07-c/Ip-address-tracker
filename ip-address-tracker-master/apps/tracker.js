@@ -145,3 +145,24 @@ function showError(message) {
     }, 5000);
 }
 
+//Hide error message
+function hideError() {
+    document.getElementById('errorMessage').classList.remove('active')
+}
+
+// Event Listeners
+document.getElementById('search-btn').addEventListener('click', () => {
+    const query = document.getElementById('ipInput').value.trim();
+    if (query) {
+        getIPData(query);
+    }
+});
+
+document.getElementById('ipInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        const query = e.target.value.trim();
+        if (query) {
+            getIPData(query);
+        }
+    }
+});
