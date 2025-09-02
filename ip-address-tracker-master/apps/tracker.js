@@ -3,7 +3,7 @@
  const API_KEY = 'at_Et1xKgn6RyvRpjLSWNNzcoWVBQnl2';
 
  //Initialize map
-function initMap(lat = 51.505, lng = -0.09) {
+function initMap(lat = 6.3382, lng = 5.6258) {
     if (map) {
         map.remove();
     }

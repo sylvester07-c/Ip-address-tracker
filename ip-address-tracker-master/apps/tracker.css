@@ -15,9 +15,7 @@
 }
 
 #header-img {
-    /* position: relative; */
     width: 100%;
-    /* height: auto; */
     display: block;
     cursor: pointer;
 }
@@ -52,7 +50,6 @@
     padding: 8px;
     border: 1px solid #ccc;
     border-right: none;
-    /* remove border where they meet */
     border-radius: 15px 0 0 15px;
     outline: none;
     height: 58px;
@@ -215,59 +212,3 @@
     }
 }
 
-@media (max-width: 768px) {
-    .header {
-        padding: 1.5rem 1rem 7rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    .info-box {
-        grid-template-columns: 1fr;
-        width: calc(100% - 2rem);
-    }
-
-    .info-title {
-        padding: 1.25rem;
-        text-align: center;
-    }
-
-    .info-title:not(:last-child)::after {
-        display: none;
-    }
-
-    .info-box:not(:last-child) {
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    .info-title {
-        font-size: 0.625rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .info-value {
-        font-size: 1rem;
-    }
-
-    #map {
-        height: calc(100vh - 380px);
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
-    }
-
-    #ipInput {
-        font-size: 0.875rem;
-        padding: 1rem;
-    }
-
-    #search-btn {
-        padding: 1rem;
-    }
-}
