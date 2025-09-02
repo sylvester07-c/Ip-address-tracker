@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="tracker.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
+  </head>
+  <body>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="error-message" id="errorMessage"></div>
+
+    <header id="header">
+      <img src="./images/pattern-bg-desktop.png" alt="" id="header-img" />
+      <div id="overlay">
+        <h1>IP Address Tracker</h1>
+        <div id="input-group">
+          <input type="text" placeholder="Enter IP Address or Domain" />
+          <button id="search-btn">
+            <img src="./images/icon-arrow.svg" alt="" />
+          </button>
+
+        </div>
+        
+      </div>
+    </header>
+    <main id="main">
+        <div id="info-container">
+          <div class="info-box">
+            <p class="info-title">IP ADDRESS</p>
+            <h1 id="ip-address" class="info-value">-</h1>
+          </div>
+          <div class="info-box">
+            <p class="info-title">LOCATION</p>
+            <h1 id="location" class="info-value">-</h1>
+          </div>
+          <div class="info-box">
+            <p class="info-title">TIMEZONE</p>
+            <h1 id="timezone" class="info-value">-</h1>
+          </div>
+          <div class="info-box">
+            <p class="info-title">ISP</p>
+            <h1 id="isp" class="info-value">-</h1>
+          </div>
+        </div>
+        <div id="map"></div>
+
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""></script>
+    <script src="tracker.js"></script>
+  </body>
+</html>

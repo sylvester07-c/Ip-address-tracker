@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+    position: relative;
+    display: inline-block;
+    background-color: #f8f9fa;
+    /* padding: 20px; */
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#header-img {
+    /* position: relative; */
+    width: 100%;
+    /* height: auto; */
+    display: block;
+}
+
+#overlay {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 555px;
+    height: 114px;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+
+#overlay h1 {
+    font-size: 32px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+#input-group {
+    display: flex;
+    max-width: 600px;
+
+}
+
+#input-group input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-right: none; /* remove border where they meet */
+    border-radius: 15px 0 0 15px;
+    outline: none;
+    height: 58px;
+    cursor: pointer;
+}
+
+#input-group button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    background-color: black;
+    color: white;
+    border-radius: 0 15px 15px 0;
+    cursor: pointer;
+    height: 58px;
+    width: 58px;
+}
+
+#main {
+    /* border: 1px solid black; */
+    position: relative;
+}
+
+#info-section {
+    border: 1px solid black;
+    margin-left: 0px;
+}
+
+#info-container {
+            position: absolute;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% - 3rem);
+            max-width: 1110px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            overflow: hidden;
+            height: 145px;
+        }
+
+.info-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.1);
+}
+
+.info-box:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50%;
+            width: 1px;
+            background: #e0e0e0;
+        }
+
+ 
+
+#map {
+     height: calc(100vh - 280px);
+     min-height: 400px;
+     background: #f0f0f0;
+     position: relative;
+     z-index: 1;
+     
+
+}
