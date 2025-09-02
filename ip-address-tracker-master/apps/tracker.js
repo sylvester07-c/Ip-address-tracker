@@ -24,7 +24,7 @@ function initMap(lat = 51.505, lng = -0.09) {
     const customIcon = L.divIcon({
         html:
         `<div style = "
-            background: linear-gradient(135deg, #667eea 0%, #111013ff 100%);
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
             width: 40px;
             height: 40px;
             border-radius: 50% 50% 50% 0;
@@ -62,7 +62,7 @@ async function getIPData(query) {
     hideError();
 
     try {
-        let url = `https://geo.ipify.org/api/v2/country?apiKey=${API_KEY}`;
+        let url = `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}`;
 
         if(query) {
             //Check if it is an IP address or domain
