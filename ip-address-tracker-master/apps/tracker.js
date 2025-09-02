@@ -13,65 +13,64 @@ function initMap(lat = 51.505, lng = -0.09) {
         zoomControl: true,
         scrollWheelZoom: true
     });
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy OpenStreetMap contributors',
+        maxZoom: 19
+    }).addTo(map);
+
+    // Custom icon
+    const customIcon = L.divIcon({
+        html:
+        `<div style = "
+            background: linear-gradient(135deg, #667eea 0%, #111013ff 100%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+
+        ">
+          <div style = "
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+
+          "></div>
+
+        </div>`,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -40],
+        className: 'custom-marker'
+    });
+
+    // Add marker
+    marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
 }
-
-//Add OpenStreetMap tiles
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 19
-}).addTo(map);
-
-//Custom icon
-const customIcon = L.divIcon({
-    html: 
-    `<div style = "
-        background: linear-gradient(135deg, #667eea 0%, #111013ff 100%);
-        width: 40px;
-        height: 40px;
-        border-radius: 50% 50% 50% 0;
-        transform: rotate(-45deg);
-        border: 3px solid white;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        position: relative; 
-        
-    ">
-      <div style = "
-        position: absolute;
-        width: 12px;
-        height: 12px;
-        background: white;
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(45deg);
-    
-      "></div>
-
-    </div>`,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-    popupAnchor: [0, -40],
-    className: 'custom-marker'
-});
-
-//Add marker
-marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
-
 //Fetch IP data
-async function getIPData(query = ''){
+async function getIPData(query) {
     showLoading(true);
     hideError();
 
     try {
-        let url = `https://geo.ipify.org/api/v2/country?apiKey=${API_KEY}&ipAddress=8.8.8.8`;
+        let url = `https://geo.ipify.org/api/v2/country?apiKey=${API_KEY}`;
 
         if(query) {
             //Check if it is an IP address or domain
             const ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
-            if (ipRegex.text(query)) {
+            if (ipRegex.test(query)) {
                 url += `&ipAddress=${query}`;
             } else {
-                url += `&domain=${query}`
+                url += `&domain=${query}`;
             }
         }
 
@@ -79,12 +78,13 @@ async function getIPData(query = ''){
 
         if(!response.ok) {
             throw new Error('Failed to fetch IP data');
-
         }
 
-        const data = await response.json();
-        updateUI(data);
-        updateMap(data.location.lat, data.location.lng);
+    const data = await response.json();
+    // Hide error message if fetch is successful and data is valid
+    hideError();
+    updateUI(data);
+    updateMap(data.location.lat, data.location.lng);
 
     } catch (error) {
         console.error('Error:', error);
@@ -92,18 +92,17 @@ async function getIPData(query = ''){
     } finally {
         showLoading(false);
     }
-
 }
 
 // Update UI with IP data
 function updateUI(data) {
-    document.getElementById('ipAddress').textContent = data.ip || '-';
-    document.getElementById('location').textContent = 
-        `${data.location.city || ''}, ${data.location.region || ''} ${data.location.postalcode || ''}`.trim() || '-';
-    document.getElementById('timezone').textContent = 
+    document.getElementById('ip-address').textContent = data.ip || '-';
+    document.getElementById('location').textContent =
+        `${data.location.city || ''} ${data.location.region || ''} ${data.location.postalCode || ''}`.trim() || '-';
+    document.getElementById('timezone').textContent =
         data.location.timezone ? `UTC ${data.location.timezone}` : '-';
-    document.getElementById('isp').textContent = data.isp || '-'; 
-    
+    document.getElementById('isp').textContent = data.isp || '-';
+
      // Animate the info items
     document.querySelectorAll('.info-box').forEach((item, index) => {
         item.style.animation = 'none';
@@ -115,7 +114,7 @@ function updateUI(data) {
 
 //update map position
 function updateMap(lat, lng) {
-    if(!map) {
+    if (!map) {
         initMap(lat, lng);
     } else {
         map.setView([lat, lng], 13, {
@@ -125,13 +124,23 @@ function updateMap(lat, lng) {
 
         if (marker) {
             marker.setLatLng([lat, lng]);
+        } else {
+            // Create marker if it doesn't exist
+            const customIcon = L.divIcon({
+                html: `<div style="background: linear-gradient(135deg, #667eea 0%, #111013ff 100%); width: 40px; height: 40px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.3); position: relative;"><div style=\"position: absolute; width: 12px; height: 12px; background: white; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg);\"></div></div>`,
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40],
+                className: 'custom-marker'
+            });
+            marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
         }
     }
 }
 
 // show or hide loading spinner
 function showLoading(show) {
-    document.getElementById('Loading').classList.toggle('active', show);
+    document.getElementById('loading').classList.toggle('active', show);
 }
 
 //show error message
@@ -147,7 +156,9 @@ function showError(message) {
 
 //Hide error message
 function hideError() {
-    document.getElementById('errorMessage').classList.remove('active')
+    const errorEl = document.getElementById('errorMessage');
+    errorEl.classList.remove('active');
+    errorEl.textContent = '';
 }
 
 // Event Listeners
@@ -166,3 +177,18 @@ document.getElementById('ipInput').addEventListener('keypress', (e) => {
         }
     }
 });
+
+//Initialize with user's IP on page load
+window.addEventListener('load', () => {
+    initMap();
+    getIPData();
+});
+
+ // Handle window resize for map
+window.addEventListener('resize', () => {
+    if (map) {
+        map.invalidateSize();
+    }
+});
+
+ 
